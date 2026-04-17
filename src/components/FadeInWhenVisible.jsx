@@ -12,3 +12,4 @@ const FadeInWhenVisible = ({ children, delay = 0 }) => (
 );
 
 export default FadeInWhenVisible;
+

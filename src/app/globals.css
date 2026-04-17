@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================
+   ALLURA GLOBAL STYLES
+   ========================================= */
+
+@layer base {
+  body {
+    @apply bg-[#3B0010] text-[#FFD77A] font-clean antialiased overflow-x-hidden;
+  }
+  button {
+    @apply transition duration-200 ease-out;
+    will-change: transform, box-shadow;
+  }
+  @media (hover: hover) {
+    button:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 8px 22px rgba(255, 215, 122, 0.25);
+    }
+    button:active {
+      transform: translateY(0) scale(0.99);
+      box-shadow: 0 4px 12px rgba(255, 215, 122, 0.2);
+    }
+  }
+}
+
+/* =========================================
+   COMPONENTS: BUTTONS, INPUTS, ANIMATIONS
+   ========================================= */
+
+@layer components {
+  /* Gold Button (Main CTA) */
+  .btn-gold {
+    @apply bg-[#FFD77A] text-[#4B0013] font-semibold rounded-full px-6 py-2
+    shadow-[0_12px_30px_rgba(255,215,122,0.25)] hover:bg-[#FFE9A0]
+    focus:ring-2 focus:ring-[#FFD77A]/50 no-underline;
+  }
+
+  /* Outline Gold Button (Secondary CTA) */
+  .btn-outline-gold {
+    @apply border border-[#FFD77A] text-[#FFD77A] font-semibold rounded-full px-6 py-2
+    hover:bg-[#FFD77A] hover:text-[#4B0013]
+    focus:ring-2 focus:ring-[#FFD77A]/50 no-underline;
+  }
+
+  /* Input Field */
+  .input-gold {
+    @apply bg-transparent border border-[#FFD77A]/40 text-[#FFD77A]
+    rounded-md px-4 py-2 w-full placeholder-[#FFD77A]/50 focus:outline-none
+    focus:border-[#FFD77A] focus:ring-1 focus:ring-[#FFD77A]/60 transition-all duration-200;
+  }
+
+  /* Select Field */
+  .select-gold {
+    @apply bg-burgundy border border-[#FFD77A]/40 text-[#FFD77A]
+    rounded-xl px-4 py-2.5 pr-10 w-full font-clean placeholder-[#FFD77A]/50
+    focus:outline-none focus:border-[#FFD77A] focus:ring-1 focus:ring-[#FFD77A]/60
+    transition-all duration-200 appearance-none;
+    background-image: linear-gradient(45deg, transparent 50%, #ffd77a 50%),
+      linear-gradient(135deg, #ffd77a 50%, transparent 50%);
+    background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+    background-size: 7px 7px, 7px 7px;
+    background-repeat: no-repeat;
+  }
+
+  .select-gold:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .select-gold option {
+    background: #2a0011;
+    color: #ffd77a;
+    font-family: "Space Grotesk", "Cormorant Garamond", sans-serif;
+  }
+
+  /* Fade Animation */
+  .fade-in {
+    @apply opacity-0 translate-y-4 transition-all duration-700 ease-in-out;
+  }
+
+  .fade-in.visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Luxury Shadows */
+  .shadow-gold {
+    box-shadow: 0 0 10px rgba(255, 215, 122, 0.4);
+  }
+
+  /* Hover Glow */
+  .hover-glow:hover {
+    box-shadow: 0 12px 30px rgba(255, 215, 122, 0.35);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+
+  /* Gold Shine Effect — Only for true hyperlinks */
+  .link-glow {
+    position: relative;
+    color: #ffd77a;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .link-glow::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, #ffd77a, #ffe9a0, #ffd77a);
+    transition: width 0.4s ease;
+  }
+
+  .link-glow:hover {
+    color: #fff5cc;
+  }
+
+  .link-glow:hover::after {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   UTILITIES: SCROLLBAR, SELECTION, ETC.
+   ========================================= */
+
+.gold-embrace {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  animation: gold-embrace-fade 4.5s ease forwards;
+}
+.gold-embrace::before,
+.gold-embrace::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(35px);
+  opacity: 0;
+}
+.gold-embrace::before {
+  width: 85%;
+  height: 85%;
+  left: -50%;
+  top: 5%;
+  background: radial-gradient(circle, rgba(255, 233, 190, 0.55), rgba(255, 215, 122, 0));
+  animation: gold-embrace-arc 4.5s ease forwards;
+}
+.gold-embrace::after {
+  width: 55%;
+  height: 55%;
+  right: -25%;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(255, 210, 150, 0.45), rgba(255, 215, 122, 0));
+  animation: gold-embrace-soft 4.5s ease forwards;
+}
+@keyframes gold-embrace-arc {
+  0% {
+    transform: scale(0.7) translate(-20%, -10%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.6;
+  }
+  65% {
+    transform: scale(1.05) translate(10%, 0%);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.25) translate(25%, 10%);
+    opacity: 0;
+  }
+}
+@keyframes gold-embrace-soft {
+  0% {
+    transform: scale(0.6) translate(10%, 15%);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.45;
+  }
+  75% {
+    transform: scale(1.05) translate(-5%, -5%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.25) translate(-15%, -15%);
+    opacity: 0;
+  }
+}
+@keyframes gold-embrace-fade {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #4b0013;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffd77a;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ebcb6f;
+}
+
+::selection {
+  background: #ffd77a;
+  color: #4b0013;
+}
+

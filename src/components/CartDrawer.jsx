@@ -1,14 +1,13 @@
 import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
-import { useCurrency } from "../context/CurrencyContext";
-import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext.jsx";
+import { useCurrency } from "../hooks/useCurrency.js";
 import { motion, AnimatePresence } from "framer-motion";
+import { resolveProductImage } from "../utils/productMedia.js";
 
 function CartDrawer({ isOpen, onClose }) {
   const { cart, removeFromCart, getCartTotal } = useContext(CartContext);
   const { convertPrice, symbol } = useCurrency();
 
-  // ✅ Safely handle total with conversion
   const rawTotal = getCartTotal() || 0;
   const total = isNaN(rawTotal) ? 0 : convertPrice(rawTotal);
 
@@ -41,7 +40,7 @@ function CartDrawer({ isOpen, onClose }) {
                 onClick={onClose}
                 className="text-gold hover:text-white text-xl"
               >
-                ✕
+                ×
               </button>
             </div>
 
@@ -53,32 +52,44 @@ function CartDrawer({ isOpen, onClose }) {
                 </p>
               ) : (
                 cart.map((item) => {
-                  const basePrice =
-                    Number(String(item.price).replace(/[£,]/g, "")) || 0;
+                  const basePrice = Number(item.price) || 0;
                   const qty = Number(item.quantity) || 1;
+                  const thumbnail = resolveProductImage(item);
 
                   return (
                     <div
                       key={item.id}
-                      className="flex justify-between items-center border-b border-gold/20 pb-3"
+                      className="flex gap-3 border border-gold/15 rounded-2xl p-3 bg-burgundy/60"
                     >
-                      <div>
-                        <p className="font-semibold">
-                          {item.name || "Unnamed"}
-                        </p>
-                        <p className="text-sm opacity-80">
-                          {symbol}
-                          {convertPrice(basePrice).toFixed(2)} × {qty}
+                      <div className="w-16 h-16 rounded-xl bg-burgundy/80 overflow-hidden flex-shrink-0 border border-gold/10">
+                        {thumbnail ? (
+                          <img
+                            src={thumbnail}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-xs uppercase tracking-[0.3em] text-gold/60">
+                            {item.name?.[0] || "A"}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold">{item.name || "Unnamed"}</p>
+                        <p className="text-xs uppercase text-gold/60 tracking-[0.3em]">
+                          {qty} × {symbol}
+                          {convertPrice(basePrice).toFixed(2)}
                         </p>
                       </div>
-                      <div className="text-right">
-                        <p>
+                      <div className="text-right flex flex-col items-end gap-1">
+                        <p className="text-sm">
                           {symbol}
-                          {(convertPrice(basePrice * qty)).toFixed(2)}
+                          {convertPrice(basePrice * qty).toFixed(2)}
                         </p>
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="text-xs text-red-400 hover:text-red-300 mt-1"
+                          className="text-[11px] text-red-400 hover:text-red-300"
                         >
                           Remove
                         </button>
@@ -90,7 +101,7 @@ function CartDrawer({ isOpen, onClose }) {
             </div>
 
             {/* Footer */}
-            <div className="border-t border-gold/20 p-6">
+            <div className="border-t border-gold/20 p-6 bg-burgundy">
               <div className="flex justify-between mb-4 text-lg font-semibold">
                 <span>Total:</span>
                 <span>
@@ -100,13 +111,13 @@ function CartDrawer({ isOpen, onClose }) {
               </div>
 
               {cart && cart.length > 0 && (
-                <Link
-                  to="/checkout"
+                <a
+                  href="/checkout"
                   onClick={onClose}
                   className="btn-gold block w-full text-center py-2 text-lg"
                 >
                   Proceed to Checkout
-                </Link>
+                </a>
               )}
             </div>
           </motion.div>

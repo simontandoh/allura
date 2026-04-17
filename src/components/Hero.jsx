@@ -1,19 +1,61 @@
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function Hero() {
   return (
-    <section className="flex flex-col justify-center items-center text-center py-24 px-6 md:px-16">
-      <h1 className="text-5xl md:text-6xl font-elegant mb-6 leading-tight">
-        Luxury. Elegance. Empowerment.
-      </h1>
-      <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl">
-      </p>
-      <Link
-        to="/shop"
-        className="bg-gold text-burgundy px-10 py-3 rounded-full text-lg font-semibold hover:bg-white hover:scale-105 transition-transform duration-300 shadow-md"
-      >
-        Shop Now
-      </Link>
+    <section className="relative w-full h-screen overflow-hidden">
+      {/* Background Video */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src="/videos/allura-bg.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+
+      {/* Overlay for contrast */}
+      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+
+      {/* Animated Content */}
+      <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-gold px-6 pt-20 md:pt-28">
+        <motion.h1
+          className="text-5xl md:text-7xl font-elegant mb-6 leading-tight"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          Luxury. Elegance. Empowerment.
+        </motion.h1>
+
+        <motion.p
+          className="text-lg md:text-xl mb-10 max-w-2xl opacity-90"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+        >
+          Discover the artistry behind every strand. Experience hair redefined.
+        </motion.p>
+
+        <motion.div
+          className="flex flex-col md:flex-row gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.7 }}
+        >
+          <a
+            href="/shop"
+            className="bg-gold text-burgundy px-10 py-3 rounded-full text-lg font-semibold hover:bg-white hover:scale-105 transition-transform duration-300 shadow-md"
+          >
+            Shop Now
+          </a>
+          <a
+            href="/about"
+            className="border border-gold text-gold px-10 py-3 rounded-full text-lg font-semibold hover:bg-gold hover:text-burgundy hover:scale-105 transition-transform duration-300"
+          >
+            Explore Our Vision
+          </a>
+        </motion.div>
+      </div>
     </section>
   );
 }

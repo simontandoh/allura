@@ -1,19 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
-        burgundy: "#5E001B",
-        burgundyDark: "#4B0013",
-        gold: "#E4B32B",
-        goldLight: "#FFD77A",
+        burgundy: "#2A0011",
+        burgundyDark: "#150009",
+        burgundySecondary: "#4B0013",
+        gold: "#FFD77A",
       },
       fontFamily: {
-        elegant: ["Playfair Display", "serif"],
-        clean: ["Poppins", "sans-serif"],
+        elegant: ["Cormorant Garamond", "Playfair Display", "serif"],
+        clean: ["Space Grotesk", "Poppins", "sans-serif"],
       },
     },
   },
   plugins: [],
 };
+
