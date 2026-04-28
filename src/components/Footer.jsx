@@ -8,7 +8,6 @@ const footerLinks = [
     items: [
       { label: "New Arrivals", to: "/shop" },
       { label: "Bespoke Orders", to: "/contact" },
-      { label: "Blog", to: "/blog" },
     ],
   },
   {

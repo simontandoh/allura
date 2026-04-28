@@ -16,7 +16,6 @@ const NAV_LINKS = [
   { label: "Shop", to: "/shop" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
-  { label: "Blog", to: "/blog" },
   { label: "FAQs", to: "/faqs" },
   { label: "Privacy Policy", to: "/privacy-policy" },
   { label: "Terms & Conditions", to: "/terms" },

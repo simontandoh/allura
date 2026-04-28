@@ -1,7 +1,6 @@
 import FadeInWhenVisible from "../components/FadeInWhenVisible";
 import Hero from "../components/Hero";
 import FeaturedProducts from "../components/FeaturedProducts";
-import SeeTheLook from "../components/SeeTheLook";
 
 function Home() {
   return (
@@ -10,10 +9,6 @@ function Home() {
 
       <FadeInWhenVisible delay={0.2}>
         <FeaturedProducts />
-      </FadeInWhenVisible>
-
-      <FadeInWhenVisible delay={0.4}>
-        <SeeTheLook />
       </FadeInWhenVisible>
     </div>
   );
