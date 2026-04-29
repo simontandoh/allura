@@ -242,7 +242,16 @@ function CheckoutInner({ clientSecret }) {
     if (error) {
       const recoveredIntent = error.payment_intent;
       if (["succeeded", "processing", "requires_capture"].includes(recoveredIntent?.status)) {
-        await handleSuccessfulIntent(recoveredIntent, snapshotPayload);
+        try {
+          await handleSuccessfulIntent(recoveredIntent, snapshotPayload);
+        } catch (err) {
+          console.error("Order save failed after payment:", err);
+          toast.error(
+            "Payment went through, but saving your order failed. Contact support with reference: " +
+              (recoveredIntent?.id || "unknown")
+          );
+          setProcessing(false);
+        }
         return;
       }
 
@@ -259,7 +268,16 @@ function CheckoutInner({ clientSecret }) {
     const status = paymentIntent?.status;
 
     if (["succeeded", "processing", "requires_capture"].includes(status)) {
-      await handleSuccessfulIntent(paymentIntent, snapshotPayload);
+      try {
+        await handleSuccessfulIntent(paymentIntent, snapshotPayload);
+      } catch (err) {
+        console.error("Order save failed after payment:", err);
+        toast.error(
+          "Payment went through, but saving your order failed. Contact support with this reference: " +
+            (paymentIntent?.id || "unknown")
+        );
+        setProcessing(false);
+      }
       return;
     }
 
@@ -422,7 +440,7 @@ function CheckoutInner({ clientSecret }) {
             {cart.map((item, i) => (
               <div key={i} className="flex justify-between border-b border-gold/20 py-2">
                 <p>
-                  {item.name} Ã— {item.quantity}
+                  {item.name} × {item.quantity}
                 </p>
                 <p>
                   {symbol}

@@ -1,14 +1,32 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /products/{id} {
-      allow read: if true;
-      allow write, update, delete: if request.auth != null &&
+
+    function isAdmin() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
     }
 
+    match /products/{id} {
+      allow read: if true;
+      allow write, update, delete: if isAdmin();
+    }
+
     match /orders/{id} {
-      allow read, write: if request.auth != null;
+      // Checkout writes orders after Stripe confirms; many buyers are guests (not signed in).
+      allow get: if true;
+
+      allow list: if isAdmin() ||
+        (request.auth != null && resource.data.userId == request.auth.uid);
+
+      allow create: if request.resource.data.paymentIntentId is string
+        && request.resource.data.paymentIntentId.size() > 10
+        && request.resource.data.total is number
+        && request.resource.data.total >= 0
+        && request.resource.data.items is list;
+
+      allow update, delete: if isAdmin();
     }
 
     match /users/{uid} {
