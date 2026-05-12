@@ -49,9 +49,12 @@ function Navbar() {
 
   useEffect(() => {
     const updateState = () => {
-      const heroThreshold = Math.max(window.innerHeight - 120, 120);
       const scrollY = window.scrollY;
       setAtTop(scrollY < 6);
+      const heroEl = document.querySelector("[data-hero]");
+      const heroThreshold = heroEl
+        ? Math.max(heroEl.offsetHeight - 100, 160)
+        : Math.max(window.innerHeight - 120, 120);
       const over = scrollY < heroThreshold;
       setOverHero(over);
       const hideDuringHero = over && scrollY > heroThreshold * 0.4;
