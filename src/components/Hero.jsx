@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 
 function Hero() {
   return (
-    <section className="relative w-full min-h-[100svh] h-[100svh] md:h-screen overflow-hidden">
+    <section className="mobile-hero-stable relative w-full min-h-[100svh] h-[100svh] md:h-screen overflow-hidden" data-hero>
       {/* Background Video */}
       <video
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute inset-0 z-0 h-full w-full min-h-full object-cover object-center max-md:transform-none max-md:will-change-auto"
         src="/videos/allura-bg.mp4"
         autoPlay
         loop
