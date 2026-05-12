@@ -34,6 +34,19 @@
   }
 }
 
+/* Mobile: avoid 100vh / min-h-screen jump when browser chrome shows or hides (iOS, Android). */
+@media (max-width: 767px) {
+  .min-h-screen {
+    min-height: 100svh !important;
+  }
+  .h-screen {
+    height: 100svh !important;
+  }
+  body {
+    min-height: 100svh !important;
+  }
+}
+
 /* =========================================
    COMPONENTS: BUTTONS, INPUTS, ANIMATIONS
    ========================================= */
