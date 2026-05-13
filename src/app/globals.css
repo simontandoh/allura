@@ -34,6 +34,16 @@
   }
 }
 
+/* Hero: never background-attachment: fixed / bg-fixed — broken on iOS Safari during scroll. */
+[data-hero],
+[data-hero]::before,
+[data-hero]::after,
+.mobile-hero-stable,
+.mobile-hero-stable::before,
+.mobile-hero-stable::after {
+  background-attachment: scroll !important;
+}
+
 /* Mobile: avoid 100vh / min-h-screen jump when browser chrome shows or hides (iOS, Android). */
 @media (max-width: 767px) {
   .min-h-screen {
